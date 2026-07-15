@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bank koppelen…</title>
+<style>
+  body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f6f4ef;
+    color: #1c2430; display: grid; place-items: center; min-height: 92vh; margin: 0; }
+  main { background: #fffdf9; border: 1px solid #e3ded4; border-radius: 14px;
+    padding: 32px 36px; max-width: 460px; text-align: center; }
+  h1 { font-size: 20px; margin: 0 0 10px; }
+  p { color: #5a6472; line-height: 1.55; font-size: 14px; }
+  a { color: #2456c8; word-break: break-all; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bank koppelen…</h1>
+  <p id="tekst">Je wordt teruggestuurd naar je dashboard op je eigen computer.</p>
+  <p id="handmatig" hidden>Gebeurt er niets? Open deze koppeling dan zelf
+    (werkt alleen op de computer waar het dashboard draait):<br><a id="link" href="#"></a></p>
+</main>
+<script>
+  // Deze pagina bevat en bewaart NIETS: hij stuurt de query-parameters van de
+  // bank-redirect (code/state/error) enkel door naar het lokale dashboard.
+  // De autorisatiecode is zonder de private key op de eigen computer onbruikbaar.
+  (function () {
+    var doel = 'http://localhost:8765/api/banksync/callback' + window.location.search;
+    var link = document.getElementById('link');
+    link.href = doel; link.textContent = doel;
+    setTimeout(function () { document.getElementById('handmatig').hidden = false; }, 2500);
+    window.location.replace(doel);
+  }());
+</script>
+</body>
+</html>
